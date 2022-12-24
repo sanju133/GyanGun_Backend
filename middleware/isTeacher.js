@@ -1,11 +1,10 @@
 const Users = require('../models/userModel')
 
-const authAdmin = async (req, res, next) => {
+const isTeacher = async (req, res, next) => {
     try {
         const user = await Users.findOne({_id: req.user.id})
-
-        if(user.role !== 1) 
-            return res.status(500).json({msg: "Admin resources access denied."})
+        if(!user.Teacher) 
+            return res.status(500).json({msg: "Teacher resources access denied."})
 
         next()
     } catch (err) {
@@ -13,4 +12,4 @@ const authAdmin = async (req, res, next) => {
     }
 }
 
-module.exports = authAdmin
+module.exports = isTeacher
